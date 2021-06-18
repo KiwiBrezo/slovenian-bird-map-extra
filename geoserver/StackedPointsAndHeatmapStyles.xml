@@ -1,0 +1,549 @@
+<!-- Default -->
+<?xml version="1.0" encoding="UTF-8"?>
+<StyledLayerDescriptor version="1.0.0" xmlns="http://www.opengis.net/sld" xmlns:ogc="http://www.opengis.net/ogc"
+  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.opengis.net/sld http://schemas.opengis.net/sld/1.0.0/StyledLayerDescriptor.xsd">
+  <NamedLayer>
+    <Name>redflag</Name>
+    <UserStyle>
+      <Name>burg</Name>
+      <Title>A small red flag</Title>
+      <Abstract>A sample of how to use an SVG based symbolizer</Abstract>
+
+      <FeatureTypeStyle>
+        <Rule>
+          <Title>Red flag</Title>
+          <PointSymbolizer>
+            <Graphic>
+              <ExternalGraphic>
+                <OnlineResource xlink:type="simple" xlink:href="burg02.svg" />
+                <Format>image/svg+xml</Format>
+              </ExternalGraphic>
+              <Size>
+                <ogc:Literal>20</ogc:Literal>
+              </Size>
+            </Graphic>
+          </PointSymbolizer>
+        </Rule>
+
+      </FeatureTypeStyle>
+    </UserStyle>
+  </NamedLayer>
+</StyledLayerDescriptor>
+
+
+<!-- Custom observation stacked points -->
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<StyledLayerDescriptor version="1.0.0"
+ xsi:schemaLocation="http://www.opengis.net/sld StyledLayerDescriptor.xsd"
+ xmlns="http://www.opengis.net/sld"
+ xmlns:ogc="http://www.opengis.net/ogc"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <NamedLayer>
+    <Name>observation_stacked_point</Name>
+    <UserStyle>
+    <!-- Styles can have names, titles and abstracts -->
+      <Title>Observation stacked point</Title>
+      <Abstract>Styles observation using stacked points</Abstract>
+      <FeatureTypeStyle>
+        <Transformation>
+          <ogc:Function name="vec:PointStacker">
+            <ogc:Function name="parameter">
+              <ogc:Literal>data</ogc:Literal>
+            </ogc:Function>
+            <ogc:Function name="parameter">
+              <ogc:Literal>cellSize</ogc:Literal>
+              <ogc:Literal>30</ogc:Literal>
+            </ogc:Function>
+            <ogc:Function name="parameter">
+              <ogc:Literal>outputBBOX</ogc:Literal>
+              <ogc:Function name="env">
+                <ogc:Literal>wms_bbox</ogc:Literal>
+              </ogc:Function>
+            </ogc:Function>
+            <ogc:Function name="parameter">
+              <ogc:Literal>outputWidth</ogc:Literal>
+              <ogc:Function name="env">
+                <ogc:Literal>wms_width</ogc:Literal>
+              </ogc:Function>
+            </ogc:Function>
+            <ogc:Function name="parameter">
+              <ogc:Literal>outputHeight</ogc:Literal>
+              <ogc:Function name="env">
+                <ogc:Literal>wms_height</ogc:Literal>
+              </ogc:Function>
+            </ogc:Function>
+          </ogc:Function>
+        </Transformation>
+        
+        
+        <Rule>
+          <Name>rule1</Name>
+          <Title>Observation</Title>
+          <ogc:Filter>
+            <ogc:PropertyIsLessThanOrEqualTo>
+              <ogc:PropertyName>count</ogc:PropertyName>
+             <ogc:Literal>1</ogc:Literal>
+            </ogc:PropertyIsLessThanOrEqualTo>
+          </ogc:Filter>
+          <PointSymbolizer>
+            <Graphic>
+              <Mark>
+                <WellKnownName>circle</WellKnownName>
+                <Fill>
+                  <CssParameter name="fill">#718355</CssParameter>
+                </Fill>
+              </Mark>
+              <Size>10</Size>
+            </Graphic>
+          </PointSymbolizer>
+        </Rule>
+        
+        
+        <Rule>
+          <Name>rule2-9</Name>
+          <Title>2-9 Observations</Title>
+          <ogc:Filter>
+            <ogc:PropertyIsBetween>
+              <ogc:PropertyName>count</ogc:PropertyName>
+              <ogc:LowerBoundary>
+                <ogc:Literal>2</ogc:Literal>
+              </ogc:LowerBoundary>
+              <ogc:UpperBoundary>
+                <ogc:Literal>9</ogc:Literal>
+              </ogc:UpperBoundary>
+            </ogc:PropertyIsBetween>
+          </ogc:Filter>
+          <PointSymbolizer>
+            <Graphic>
+              <Mark>
+                <WellKnownName>circle</WellKnownName>
+                <Fill>
+                  <CssParameter name="fill">#005904</CssParameter>
+                </Fill>
+              </Mark>
+              <Size>16</Size>
+            </Graphic>
+          </PointSymbolizer>
+          <TextSymbolizer>
+            <Label>
+              <ogc:PropertyName>count</ogc:PropertyName>
+            </Label>
+            <Font>
+              <CssParameter name="font-family">Arial</CssParameter>
+              <CssParameter name="font-size">12</CssParameter>
+              <CssParameter name="font-weight">bold</CssParameter>
+            </Font>
+            <LabelPlacement>
+              <PointPlacement>
+                <AnchorPoint>
+                  <AnchorPointX>
+                    <ogc:Literal>0.5</ogc:Literal>
+                  </AnchorPointX>
+                  <AnchorPointY>
+                    <ogc:Literal>0.5</ogc:Literal>
+                  </AnchorPointY>
+                </AnchorPoint>
+                <Rotation>
+                  <ogc:Literal>0.0</ogc:Literal>
+                </Rotation>
+              </PointPlacement>
+            </LabelPlacement>
+            <Halo>
+              <Radius>2</Radius>
+              <Fill>
+                <CssParameter name="fill">#005904</CssParameter>
+                <CssParameter name="fill-opacity">0.9</CssParameter>
+              </Fill>
+            </Halo>
+            <Fill>
+              <CssParameter name="fill">#FFFFFF</CssParameter>
+              <CssParameter name="fill-opacity">1.0</CssParameter>
+            </Fill>
+          </TextSymbolizer>
+        </Rule>
+        
+        
+        <Rule>
+          <Name>rule10-99</Name>
+          <Title>10-99 Observations</Title>
+          <ogc:Filter>
+            <ogc:PropertyIsBetween>
+              <ogc:PropertyName>count</ogc:PropertyName>
+              <ogc:LowerBoundary>
+                <ogc:Literal>10</ogc:Literal>
+              </ogc:LowerBoundary>
+              <ogc:UpperBoundary>
+                <ogc:Literal>99</ogc:Literal>
+              </ogc:UpperBoundary>
+            </ogc:PropertyIsBetween>
+          </ogc:Filter>
+          <PointSymbolizer>
+            <Graphic>
+              <Mark>
+                <WellKnownName>circle</WellKnownName>
+                <Fill>
+                  <CssParameter name="fill">#005904</CssParameter>
+                </Fill>
+              </Mark>
+              <Size>22</Size>
+            </Graphic>
+          </PointSymbolizer>
+          <TextSymbolizer>
+            <Label>
+              <ogc:PropertyName>count</ogc:PropertyName>
+            </Label>
+            <Font>
+              <CssParameter name="font-family">Arial</CssParameter>
+              <CssParameter name="font-size">11</CssParameter>
+              <CssParameter name="font-weight">bold</CssParameter>
+            </Font>
+            <LabelPlacement>
+              <PointPlacement>
+                <AnchorPoint>
+                  <AnchorPointX>
+                    <ogc:Literal>0.5</ogc:Literal>
+                  </AnchorPointX>
+                  <AnchorPointY>
+                    <ogc:Literal>0.5</ogc:Literal>
+                  </AnchorPointY>
+                </AnchorPoint>
+                <Rotation>
+                  <ogc:Literal>0.0</ogc:Literal>
+                </Rotation>
+              </PointPlacement>
+            </LabelPlacement>
+            <Halo>
+               <Radius>2</Radius>
+               <Fill>
+                 <CssParameter name="fill">#005904</CssParameter>
+                 <CssParameter name="fill-opacity">0.9</CssParameter>
+               </Fill>
+            </Halo>
+            <Fill>
+              <CssParameter name="fill">#FFFFFF</CssParameter>
+              <CssParameter name="fill-opacity">1.0</CssParameter>
+            </Fill>
+          </TextSymbolizer>
+        </Rule>
+        
+        <Rule>
+          <Name>rule100-999</Name>
+          <Title>100-999 Observations</Title>
+          <ogc:Filter>
+            <ogc:PropertyIsBetween>
+              <ogc:PropertyName>count</ogc:PropertyName>
+              <ogc:LowerBoundary>
+                <ogc:Literal>100</ogc:Literal>
+              </ogc:LowerBoundary>
+              <ogc:UpperBoundary>
+                <ogc:Literal>999</ogc:Literal>
+              </ogc:UpperBoundary>
+            </ogc:PropertyIsBetween>
+          </ogc:Filter>
+          <PointSymbolizer>
+            <Graphic>
+              <Mark>
+                <WellKnownName>circle</WellKnownName>
+                <Fill>
+                  <CssParameter name="fill">#005904</CssParameter>
+                </Fill>
+              </Mark>
+              <Size>24</Size>
+            </Graphic>
+          </PointSymbolizer>
+          <TextSymbolizer>
+            <Label>
+              <ogc:PropertyName>count</ogc:PropertyName>
+            </Label>
+            <Font>
+              <CssParameter name="font-family">Arial</CssParameter>
+              <CssParameter name="font-size">10</CssParameter>
+              <CssParameter name="font-weight">bold</CssParameter>
+            </Font>
+            <LabelPlacement>
+              <PointPlacement>
+                <AnchorPoint>
+                  <AnchorPointX>
+                    <ogc:Literal>0.5</ogc:Literal>
+                  </AnchorPointX>
+                  <AnchorPointY>
+                    <ogc:Literal>0.5</ogc:Literal>
+                  </AnchorPointY>
+                </AnchorPoint>
+                <Rotation>
+                  <ogc:Literal>0.0</ogc:Literal>
+                </Rotation>
+              </PointPlacement>
+            </LabelPlacement>
+            <Halo>
+               <Radius>2</Radius>
+               <Fill>
+                 <CssParameter name="fill">#005904</CssParameter>
+                 <CssParameter name="fill-opacity">0.9</CssParameter>
+               </Fill>
+            </Halo>
+            <Fill>
+              <CssParameter name="fill">#FFFFFF</CssParameter>
+              <CssParameter name="fill-opacity">1.0</CssParameter>
+            </Fill>
+          </TextSymbolizer>
+        </Rule>
+        
+        
+      </FeatureTypeStyle>
+    </UserStyle>
+  </NamedLayer>
+</StyledLayerDescriptor>
+
+<!-- Optional stacked points -->
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<StyledLayerDescriptor version="1.0.0"
+xsi:schemaLocation="http://www.opengis.net/sld StyledLayerDescriptor.xsd"
+xmlns="http://www.opengis.net/sld" xmlns:ogc="http://www.opengis.net/ogc"
+xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <NamedLayer>
+    <Name>g_stacker</Name>
+    <UserStyle>
+      <Title>Point Stacker</Title>
+      <Abstract>A sample style that aggregates points</Abstract>
+      <FeatureTypeStyle>
+        <Transformation>
+          <ogc:Function name="gs:PointStacker">
+            <ogc:Function name="parameter">
+              <ogc:Literal>data</ogc:Literal>
+            </ogc:Function>
+            <ogc:Function name="parameter">
+              <ogc:Literal>cellSize</ogc:Literal>
+              <ogc:Literal>50</ogc:Literal>
+            </ogc:Function>
+            <ogc:Function name="parameter">
+              <ogc:Literal>outputBBOX</ogc:Literal>
+              <ogc:Function name="env">
+                <ogc:Literal>wms_bbox</ogc:Literal>
+              </ogc:Function>
+            </ogc:Function>
+            <ogc:Function name="parameter">
+              <ogc:Literal>outputWidth</ogc:Literal>
+              <ogc:Function name="env">
+                <ogc:Literal>wms_width</ogc:Literal>
+              </ogc:Function>
+            </ogc:Function>
+            <ogc:Function name="parameter">
+              <ogc:Literal>outputHeight</ogc:Literal>
+              <ogc:Function name="env">
+                <ogc:Literal>wms_height</ogc:Literal>
+              </ogc:Function>
+            </ogc:Function>
+          </ogc:Function>
+        </Transformation>
+        <Rule>
+          <PointSymbolizer>
+            <Graphic>
+              <Mark>
+                <WellKnownName>circle</WellKnownName>
+                <Fill>
+                  <CssParameter name="fill">#0000FF</CssParameter>
+                  <CssParameter name="fill-opacity">0.5</CssParameter>
+                </Fill>
+              </Mark>
+              <Size><ogc:Mul><ogc:PropertyName>countunique</ogc:PropertyName><ogc:Literal>3</ogc:Literal></ogc:Mul></Size>
+            </Graphic>
+          </PointSymbolizer>
+          <TextSymbolizer>
+            <Label>
+              <ogc:PropertyName>countunique</ogc:PropertyName>
+            </Label>
+            <Font>
+              <CssParameter name="font-family">Arial</CssParameter>
+              <CssParameter name="font-size">12.0</CssParameter>
+              <CssParameter name="font-style">normal</CssParameter>
+              <CssParameter name="font-weight">normal</CssParameter>
+            </Font>
+            <LabelPlacement>
+              <PointPlacement>
+                <AnchorPoint>
+                  <AnchorPointX>
+                    <ogc:Literal>0.5</ogc:Literal>
+                  </AnchorPointX>
+                  <AnchorPointY>
+                    <ogc:Literal>0.5</ogc:Literal>
+                  </AnchorPointY>
+                </AnchorPoint>
+                <Rotation>
+                  <ogc:Literal>0.0</ogc:Literal>
+                </Rotation>
+              </PointPlacement>
+            </LabelPlacement>
+            <Halo>
+              <Radius>
+                <ogc:Literal>2</ogc:Literal>
+              </Radius>
+              <Fill>
+                <CssParameter name="fill">#FFFFFF</CssParameter>
+              </Fill>
+            </Halo>
+            <Fill>
+              <CssParameter name="fill">#000000</CssParameter>
+            </Fill>
+          </TextSymbolizer>
+        </Rule>
+      </FeatureTypeStyle>
+    </UserStyle>
+  </NamedLayer>
+</StyledLayerDescriptor>
+
+
+<!-- Heatmap -->
+<?xml version="1.0" encoding="ISO-8859-1"?>
+   <StyledLayerDescriptor version="1.0.0"
+       xsi:schemaLocation="http://www.opengis.net/sld StyledLayerDescriptor.xsd"
+       xmlns="http://www.opengis.net/sld"
+       xmlns:ogc="http://www.opengis.net/ogc"
+       xmlns:xlink="http://www.w3.org/1999/xlink"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+     <NamedLayer>
+       <Name>Heatmap</Name>
+       <UserStyle>
+         <Title>Heatmap</Title>
+         <Abstract>A heatmap surface showing population density</Abstract>
+         <FeatureTypeStyle>
+           <Transformation>
+             <ogc:Function name="vec:Heatmap">
+               <ogc:Function name="parameter">
+                 <ogc:Literal>data</ogc:Literal>
+               </ogc:Function>
+               <ogc:Function name="parameter">
+                 <ogc:Literal>weightAttr</ogc:Literal>
+                 <ogc:Literal>pop2000</ogc:Literal>
+               </ogc:Function>
+               <ogc:Function name="parameter">
+                 <ogc:Literal>radiusPixels</ogc:Literal>
+                 <ogc:Function name="env">
+                   <ogc:Literal>radius</ogc:Literal>
+                   <ogc:Literal>100</ogc:Literal>
+                 </ogc:Function>
+               </ogc:Function>
+               <ogc:Function name="parameter">
+                 <ogc:Literal>pixelsPerCell</ogc:Literal>
+                 <ogc:Literal>10</ogc:Literal>
+               </ogc:Function>
+               <ogc:Function name="parameter">
+                 <ogc:Literal>outputBBOX</ogc:Literal>
+                 <ogc:Function name="env">
+                   <ogc:Literal>wms_bbox</ogc:Literal>
+                 </ogc:Function>
+               </ogc:Function>
+               <ogc:Function name="parameter">
+                 <ogc:Literal>outputWidth</ogc:Literal>
+                 <ogc:Function name="env">
+                   <ogc:Literal>wms_width</ogc:Literal>
+                 </ogc:Function>
+               </ogc:Function>
+               <ogc:Function name="parameter">
+                 <ogc:Literal>outputHeight</ogc:Literal>
+                 <ogc:Function name="env">
+                   <ogc:Literal>wms_height</ogc:Literal>
+                 </ogc:Function>
+               </ogc:Function>
+             </ogc:Function>
+           </Transformation>
+          <Rule>
+            <RasterSymbolizer>
+            <!-- specify geometry attribute to pass validation -->
+              <Geometry>
+                <ogc:PropertyName>the_geom</ogc:PropertyName></Geometry>
+              <Opacity>0.6</Opacity>
+              <ColorMap type="ramp" >
+                <ColorMapEntry color="#FFFFFF" quantity="0" label="nodata"
+                  opacity="0"/>
+                <ColorMapEntry color="#FFFFFF" quantity="0.02" label="nodata"
+                  opacity="0"/>
+                <ColorMapEntry color="#4444FF" quantity=".1" label="nodata"/>
+                <ColorMapEntry color="#FF0000" quantity=".5" label="values" />
+                <ColorMapEntry color="#FFFF00" quantity="1.0" label="values" />
+              </ColorMap>
+            </RasterSymbolizer>
+           </Rule>
+         </FeatureTypeStyle>
+       </UserStyle>
+     </NamedLayer>
+    </StyledLayerDescriptor>
+
+
+<!-- Custom Heatmap -->
+<?xml version="1.0" encoding="ISO-8859-1"?>
+   <StyledLayerDescriptor version="1.0.0"
+       xsi:schemaLocation="http://www.opengis.net/sld StyledLayerDescriptor.xsd"
+       xmlns="http://www.opengis.net/sld"
+       xmlns:ogc="http://www.opengis.net/ogc"
+       xmlns:xlink="http://www.w3.org/1999/xlink"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+     <NamedLayer>
+       <Name>Heatmap</Name>
+       <UserStyle>
+         <Title>Heatmap</Title>
+         <Abstract>A heatmap surface showing population density</Abstract>
+         <FeatureTypeStyle>
+           <Transformation>
+             <ogc:Function name="vec:Heatmap">
+               <ogc:Function name="parameter">
+                 <ogc:Literal>data</ogc:Literal>
+               </ogc:Function>
+               <ogc:Function name="parameter">
+                 <ogc:Literal>weightAttr</ogc:Literal>
+                 <ogc:Literal>col</ogc:Literal>
+               </ogc:Function>
+               <ogc:Function name="parameter">
+                 <ogc:Literal>radiusPixels</ogc:Literal>
+                 <ogc:Function name="env">
+                   <ogc:Literal>radius</ogc:Literal>
+                   <ogc:Literal>100</ogc:Literal>
+                 </ogc:Function>
+               </ogc:Function>
+               <ogc:Function name="parameter">
+                 <ogc:Literal>pixelsPerCell</ogc:Literal>
+                 <ogc:Literal>10</ogc:Literal>
+               </ogc:Function>
+               <ogc:Function name="parameter">
+                 <ogc:Literal>outputBBOX</ogc:Literal>
+                 <ogc:Function name="env">
+                   <ogc:Literal>wms_bbox</ogc:Literal>
+                 </ogc:Function>
+               </ogc:Function>
+               <ogc:Function name="parameter">
+                 <ogc:Literal>outputWidth</ogc:Literal>
+                 <ogc:Function name="env">
+                   <ogc:Literal>wms_width</ogc:Literal>
+                 </ogc:Function>
+               </ogc:Function>
+               <ogc:Function name="parameter">
+                 <ogc:Literal>outputHeight</ogc:Literal>
+                 <ogc:Function name="env">
+                   <ogc:Literal>wms_height</ogc:Literal>
+                 </ogc:Function>
+               </ogc:Function>
+             </ogc:Function>
+           </Transformation>
+          <Rule>
+            <RasterSymbolizer>
+            <!-- specify geometry attribute to pass validation -->
+              <Geometry>
+                <ogc:PropertyName>the_geom</ogc:PropertyName></Geometry>
+              <Opacity>0.4</Opacity>
+              <ColorMap type="ramp" >
+                <ColorMapEntry color="#FFFFFF" quantity="0" label=""
+                  opacity="0"/>
+                <ColorMapEntry color="#0044ff" quantity=".1" label=""/>
+                <ColorMapEntry color="#c300ff" quantity=".25" label=""/>
+                <ColorMapEntry color="#ff0090" quantity=".5" label="" />
+                <ColorMapEntry color="#ff1900" quantity=".75" label="" />
+                <ColorMapEntry color="#ffd500" quantity="1.0" label="" />
+              </ColorMap>
+            </RasterSymbolizer>
+           </Rule>
+         </FeatureTypeStyle>
+       </UserStyle>
+     </NamedLayer>
+    </StyledLayerDescriptor>
