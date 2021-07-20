@@ -1,7 +1,7 @@
 const request = require('request');
 
-const userIDs = [12, 17, 18, 19];
-const birdIDs = [24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43];
+const userIDs = [1, 2, 3, 4];
+const birdIDs = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
 const bboxMinLon = 13.6981099789;
 const bboxMinLat = 45.4523163926;
 const bboxMaxLon = 16.5648083839;
@@ -16,7 +16,7 @@ const maxMonth = 12;
 const minYear = 2019;
 const maxYear = 2021;
 
-const numberOfNewObservations = 4000;
+const numberOfNewObservations = 10000;
 
 function getRandomNumberInt(min, max) {
     return Math.floor(Math.random() * (max - min) + min);
@@ -31,6 +31,8 @@ function makeRandomDate() {
     return date.toISOString().split('T')[0];
 }
 
+console.log("Zacenjam z vstavlanjem...");
+
 for (var i = 0; i < numberOfNewObservations; i++) {
     var observation = {
         userID: userIDs[getRandomNumberInt(0, userIDs.length)],
@@ -43,7 +45,8 @@ for (var i = 0; i < numberOfNewObservations; i++) {
     }
 
     request({
-		url: "http://83.212.82.14:8080/api/addObservation",
+		url: "http://164.8.9.88:8080/slovenian-bird-map/api/observation/addObservation",
+        //url: "http://localhost:8080/api/observation/addObservation",
 		method: "POST",
 		headers: {
 			'Content-Type': 'multipart/form-data'
@@ -52,6 +55,8 @@ for (var i = 0; i < numberOfNewObservations; i++) {
 	},function (error, response, body){
         if (body == "OK") {
             console.log("USPESNO VSTAVLJEN PODATEK");
+        } else {
+            console.log("NAPAKA");
         }
     });
 }
